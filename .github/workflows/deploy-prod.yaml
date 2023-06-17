@@ -18,14 +18,14 @@ jobs:
     permissions:
       contents: read
       deployments: write
-    name: Publish to Vercel
+    name: Deploy to Vercel
     steps:
       - name: Checkout
         uses: actions/checkout@v3
       # ---------- publish ----------
       - name: Install Vercel CLI
         run: npm install --global vercel@canary
-      - name: Pull Vercel Environment Information
+      - name: Deploy to Vercel
         if: github.event_name == 'push'
         run: |
           export VERCEL_ORG_ID=${{ secrets.VERCEL_ORG_ID }}
@@ -35,3 +35,13 @@ jobs:
           vercel pull --yes --environment=production --token="$VERCEL_TOKEN"
           vercel build --prod --token="$VERCEL_TOKEN"
           vercel deploy --prebuilt --prod --token="$VERCEL_TOKEN"
+      - name: Deploy to Vercel - PREVIEW
+        if: github.event_name == 'pull_request'
+        run: |
+          export VERCEL_ORG_ID=${{ secrets.VERCEL_ORG_ID }}
+          export VERCEL_PROJECT_ID=${{ secrets.VERCEL_PROJECT_ID_MASTER }} # BRANCH-SPECIFIC
+          export VERCEL_TOKEN=${{ secrets.VERCEL_TOKEN }}
+
+          vercel pull --yes --environment=preview --token="$VERCEL_TOKEN"
+          vercel build --token="$VERCEL_TOKEN"
+          vercel deploy --prebuilt --token="$VERCEL_TOKEN"
