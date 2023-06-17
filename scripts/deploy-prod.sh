@@ -7,6 +7,6 @@ else
 	exit 1
 fi
 
-vercel pull --yes --environment=production --token=="$VERCEL_TOKEN"
-vercel build --prod --token=="$VERCEL_TOKEN"
-vercel deploy --prebuilt --prod --token=="$VERCEL_TOKEN"
+vercel pull --yes --environment=production --token="$VERCEL_TOKEN"
+vercel build --prod --token="$VERCEL_TOKEN"
+vercel deploy --prebuilt --prod --token="$VERCEL_TOKEN"
