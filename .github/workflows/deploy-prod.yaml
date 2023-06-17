@@ -26,9 +26,12 @@ jobs:
       - name: Install Vercel CLI
         run: npm install --global vercel@canary
       - name: Pull Vercel Environment Information
+        if: github.event_name == 'push'
         run: |
           export VERCEL_ORG_ID=${{ secrets.VERCEL_ORG_ID }}
-          export VERCEL_PROJECT_ID_MASTER=${{ secrets.VERCEL_PROJECT_ID_MASTER }} # BRANCH-SPECIFIC
+          export VERCEL_PROJECT_ID=${{ secrets.VERCEL_PROJECT_ID_MASTER }} # BRANCH-SPECIFIC
           export VERCEL_TOKEN=${{ secrets.VERCEL_TOKEN }}
 
-          bash scripts/deploy-prod.sh
+          vercel pull --yes --environment=production --token="$VERCEL_TOKEN"
+          vercel build --prod --token="$VERCEL_TOKEN"
+          vercel deploy --prebuilt --prod --token="$VERCEL_TOKEN"
