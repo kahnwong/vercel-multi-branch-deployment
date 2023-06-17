@@ -35,3 +35,13 @@ repos:
           - --width
           - "150"
           - --preserve-quotes
+  - repo: https://github.com/antonbabenko/pre-commit-terraform
+    rev: v1.74.1
+    hooks:
+      - id: terraform_fmt
+      - id: terraform_validate
+      - id: terraform_docs
+        args:
+          - --args=--config=.terraform-docs.yml
+      # - id: terraform_tflint
+      # - id: terraform_tfsec

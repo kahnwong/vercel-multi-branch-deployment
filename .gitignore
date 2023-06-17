@@ -4,3 +4,13 @@ cache
 
 # node
 node_modules
+
+# terraform
+.infracost
+.terraform
+terraform.tfstate*
+terraform.tfvars
+.vercel
+
+# environment
+.env
