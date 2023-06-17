@@ -49,6 +49,7 @@ jobs:
           vercel deploy --prebuilt --token="$VERCEL_TOKEN" 2>&1 | tee output.txt
       # ---------- display preview link ----------
       - name: Add preview url to pr comment
+        if: github.event_name == 'pull_request'
         uses: thollander/actions-comment-pull-request@v2
         with:
           filePath: output.txt
